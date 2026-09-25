@@ -1,0 +1,242 @@
+{
+  "version": "1.0.0",
+  "description": "Machine-readable slop rules. sloplint reads this file; edit it to change what gets flagged. Vocabulary tiers adapted from brandonwise/humanizer, phrases from hardikpandya/stop-slop and blader/humanizer.",
+  "vocabulary": {
+    "tier1": {
+      "weight": 5,
+      "note": "Dead giveaways. Every occurrence is flagged.",
+      "words": [
+        "delve", "delves", "delving", "delved",
+        "tapestry", "testament", "pivotal", "intricate", "intricacies",
+        "showcase", "showcases", "showcasing", "showcased",
+        "foster", "fosters", "fostering", "fostered",
+        "garner", "garners", "garnered", "garnering",
+        "interplay", "enduring", "vibrant", "crucial",
+        "meticulous", "meticulously", "seamless", "seamlessly",
+        "groundbreaking", "leverage", "leverages", "leveraging", "leveraged",
+        "synergy", "synergies", "transformative", "paramount",
+        "multifaceted", "myriad", "cornerstone",
+        "empower", "empowers", "empowering", "empowered",
+        "catalyst", "catalyze", "catalyzing",
+        "nestled", "realm", "bustling", "renowned", "invaluable",
+        "actionable", "impactful", "learnings", "robust",
+        "embark", "embarks", "embarking", "embarked",
+        "underscore", "underscores", "underscoring", "underscored",
+        "unparalleled", "ever-evolving", "game-changer", "game-changing"
+      ]
+    },
+    "tier2": {
+      "weight": 3,
+      "minDistinct": 2,
+      "note": "Suspicious in density. Flagged when two or more distinct terms appear.",
+      "words": [
+        "additionally", "furthermore", "moreover", "notably",
+        "consequently", "subsequently", "accordingly", "nonetheless",
+        "comprehensive", "paradigm", "holistic", "holistically",
+        "utilize", "utilizes", "utilizing", "utilized",
+        "facilitate", "facilitates", "facilitating", "facilitated",
+        "nuanced", "elucidate", "illuminate",
+        "encompass", "encompasses", "encompassing",
+        "streamline", "streamlines", "streamlining", "streamlined",
+        "spearhead", "spearheading", "bolster", "bolstering",
+        "poised", "cutting-edge", "harness", "harnessing", "harnessed",
+        "unleash", "unleashing", "revolutionize", "reimagine",
+        "elevate", "elevating", "alleviate", "alleviating",
+        "cadence", "quintessential", "ubiquitous", "proactive",
+        "endeavor", "endeavour"
+      ]
+    },
+    "tier3": {
+      "weight": 1,
+      "maxDensityPct": 1.5,
+      "note": "Context-dependent. Flagged only when their combined density exceeds maxDensityPct per 100 words.",
+      "words": [
+        "significant", "effective", "unique", "compelling",
+        "exceptional", "essential", "valuable", "innovative", "notable"
+      ]
+    }
+  },
+  "phrases": [
+    { "match": "in order to", "fix": "to", "category": "filler", "weight": 3 },
+    { "match": "due to the fact that", "fix": "because", "category": "filler", "weight": 3 },
+    { "match": "at this point in time", "fix": "now", "category": "filler", "weight": 3 },
+    { "match": "in the event that", "fix": "if", "category": "filler", "weight": 3 },
+    { "match": "has the ability to", "fix": "can", "category": "filler", "weight": 3 },
+    { "match": "have the ability to", "fix": "can", "category": "filler", "weight": 3 },
+    { "match": "it is important to note that", "fix": "", "category": "filler", "weight": 4 },
+    { "match": "it is worth noting that", "fix": "", "category": "filler", "weight": 4 },
+    { "match": "it should be noted that", "fix": "", "category": "filler", "weight": 4 },
+    { "match": "at the end of the day", "fix": "", "category": "filler", "weight": 3 },
+    { "match": "for the purpose of", "fix": "to", "category": "filler", "weight": 3 },
+    { "match": "in light of the fact that", "fix": "because", "category": "filler", "weight": 3 },
+    { "match": "first and foremost", "fix": "first", "category": "filler", "weight": 3 },
+    { "match": "last but not least", "fix": "finally", "category": "filler", "weight": 3 },
+    { "match": "in the realm of", "fix": "in", "category": "filler", "weight": 4 },
+    { "match": "when it comes to", "fix": null, "category": "filler", "weight": 2 },
+    { "match": "in today's digital age", "fix": null, "category": "significance", "weight": 5 },
+    { "match": "in today's fast-paced", "fix": null, "category": "significance", "weight": 5 },
+    { "match": "in today's rapidly evolving", "fix": null, "category": "significance", "weight": 5 },
+    { "match": "plays a crucial role", "fix": null, "category": "significance", "weight": 5 },
+    { "match": "harness the power of", "fix": null, "category": "significance", "weight": 5 },
+    { "match": "embark on a journey", "fix": null, "category": "significance", "weight": 5 },
+    { "match": "paradigm shift", "fix": null, "category": "significance", "weight": 4 },
+    { "match": "deep dive", "fix": "analysis", "category": "jargon", "weight": 3 },
+    { "match": "move the needle", "fix": null, "category": "jargon", "weight": 3 },
+    { "match": "low-hanging fruit", "fix": null, "category": "jargon", "weight": 3 },
+    { "match": "pain points", "fix": "problems", "category": "jargon", "weight": 3 },
+    { "match": "circle back", "fix": null, "category": "jargon", "weight": 3 },
+    { "match": "double-click on", "fix": null, "category": "jargon", "weight": 3 },
+    { "match": "best practices", "fix": null, "category": "jargon", "weight": 2 },
+    { "match": "thought leader", "fix": null, "category": "jargon", "weight": 3 },
+    { "match": "state-of-the-art", "fix": null, "category": "promotional", "weight": 3 },
+    { "match": "world-class", "fix": null, "category": "promotional", "weight": 3 },
+    { "match": "must-visit", "fix": null, "category": "promotional", "weight": 4 },
+    { "match": "breathtaking", "fix": null, "category": "promotional", "weight": 4 },
+    { "match": "rich cultural heritage", "fix": null, "category": "promotional", "weight": 4 },
+    { "match": "commitment to excellence", "fix": null, "category": "promotional", "weight": 4 },
+    { "match": "in the heart of", "fix": null, "category": "promotional", "weight": 3 }
+  ],
+  "regex": [
+    {
+      "id": "em-dash",
+      "pattern": "\\u2014|\\u2013|\\s--\\s",
+      "category": "style",
+      "weight": 2,
+      "note": "Replace with a period, comma, colon, or parentheses. En dashes in numeric ranges become hyphens."
+    },
+    {
+      "id": "curly-double-quotes",
+      "pattern": "[\\u201C\\u201D]",
+      "category": "style",
+      "weight": 1,
+      "note": "Weak signal on its own; most editors auto-curl. Counted lightly."
+    },
+    {
+      "id": "emoji",
+      "pattern": "[\\u2600-\\u27BF\\u2B00-\\u2BFF]|\\uD83C[\\uDF00-\\uDFFF]|\\uD83D[\\uDC00-\\uDFFF]|\\uD83E[\\uDD00-\\uDDFF]",
+      "category": "style",
+      "weight": 2,
+      "note": "Emojis decorating professional prose."
+    },
+    {
+      "id": "negative-parallelism",
+      "pattern": "\\bnot (?:just|only|merely)\\b[^.!?\\n]{0,80}?\\bbut\\b",
+      "category": "language",
+      "weight": 3,
+      "note": "It's not just X, but Y. State Y directly."
+    },
+    {
+      "id": "its-not-x-its-y",
+      "pattern": "\\b(?:it|this|that)['\\u2019]s not [^.!?\\n]{2,60}[.,;] (?:it|this|that)['\\u2019]s\\b",
+      "category": "language",
+      "weight": 3,
+      "note": "Setup/reveal contrast formula."
+    },
+    {
+      "id": "negative-listing",
+      "pattern": "\\bnot an? [^.!?\\n]{2,40}\\. not an? [^.!?\\n]{2,40}\\.",
+      "category": "rhetoric",
+      "weight": 3,
+      "note": "Rhetorical striptease: listing what something is not."
+    },
+    {
+      "id": "ing-tail",
+      "pattern": ",\\s+(?:highlighting|underscoring|emphasizing|showcasing|reflecting|symbolizing|ensuring|fostering|demonstrating|illustrating|solidifying|cementing|signaling)\\b",
+      "category": "content",
+      "weight": 4,
+      "note": "Present-participle tail adding fake depth."
+    },
+    {
+      "id": "copula-avoidance",
+      "pattern": "\\b(?:serves as|stands as|boasts)\\b",
+      "category": "language",
+      "weight": 3,
+      "note": "Use is/has."
+    },
+    {
+      "id": "vague-attribution",
+      "pattern": "\\b(?:experts (?:believe|argue|say)|studies show|industry reports suggest|observers have (?:cited|noted)|some critics argue|it is believed that|it is widely (?:believed|regarded))\\b",
+      "category": "content",
+      "weight": 4,
+      "note": "Name a real source or cut the claim."
+    },
+    {
+      "id": "chatbot-artifact",
+      "pattern": "\\b(?:i hope this helps|great question|excellent point|let me know if|would you like me to|feel free to|don['\\u2019]t hesitate to|happy to help|you['\\u2019]re absolutely right|is there anything else)\\b",
+      "category": "communication",
+      "weight": 5,
+      "note": "Chatbot correspondence pasted as content."
+    },
+    {
+      "id": "cutoff-disclaimer",
+      "pattern": "\\b(?:as of my last (?:training|knowledge)|knowledge cutoff|while specific details are (?:limited|scarce)|based on available information|maintains a low profile|keeps personal details private)\\b",
+      "category": "communication",
+      "weight": 4,
+      "note": "Cutoff disclaimers and speculative gap-filling."
+    },
+    {
+      "id": "hedging-stack",
+      "pattern": "\\b(?:could|may|might) (?:potentially|possibly|perhaps)\\b|\\b(?:potentially|arguably) (?:possibly|perhaps)\\b",
+      "category": "filler",
+      "weight": 3,
+      "note": "One qualifier per claim."
+    },
+    {
+      "id": "generic-conclusion",
+      "pattern": "\\b(?:the future looks bright|exciting times lie ahead|only time will tell|the possibilities are endless|poised for growth|watch this space|journey toward excellence|step in the right direction)\\b",
+      "category": "filler",
+      "weight": 4,
+      "note": "End on the last concrete fact instead."
+    },
+    {
+      "id": "significance-inflation",
+      "pattern": "\\b(?:marking a pivotal|(?:is|as) a testament to|serves as a reminder|underscor(?:es|ing) the (?:importance|significance)|reflects broader|setting the stage for|key turning point|evolving landscape|indelible mark|deeply rooted)\\b",
+      "category": "content",
+      "weight": 4,
+      "note": "Puffed-up importance claims."
+    },
+    {
+      "id": "throat-clearing",
+      "pattern": "\\b(?:here['\\u2019]s the thing|here['\\u2019]s what you need to know|let['\\u2019]s dive in|let['\\u2019]s explore|let['\\u2019]s break (?:this|it) down|without further ado|let that sink in|make no mistake|the uncomfortable truth)\\b",
+      "category": "rhetoric",
+      "weight": 4,
+      "note": "Announcing the point instead of making it."
+    },
+    {
+      "id": "authority-trope",
+      "pattern": "\\b(?:at its core|the real question is|what really matters|the heart of the matter|the deeper issue)\\b",
+      "category": "rhetoric",
+      "weight": 3,
+      "note": "Fake depth before an ordinary point."
+    },
+    {
+      "id": "vague-declarative",
+      "pattern": "\\bthe (?:implications|stakes|consequences|reasons) are (?:significant|high|real|structural|profound|far-reaching)\\b",
+      "category": "rhetoric",
+      "weight": 4,
+      "note": "Name the specific implication or cut."
+    },
+    {
+      "id": "false-agency",
+      "pattern": "\\b(?:the (?:data|numbers) tells? us|the market rewards|the decision emerge[sd]|the culture shift(?:s|ed)|the conversation move[sd] toward)\\b",
+      "category": "rhetoric",
+      "weight": 3,
+      "note": "Name the human doing the thing."
+    },
+    {
+      "id": "inline-header-list",
+      "pattern": "^\\s*[-*]\\s+\\*\\*[^*\\n]{2,60}\\*\\*:",
+      "flags": "gim",
+      "category": "style",
+      "weight": 3,
+      "note": "Bolded label bullets. Convert to prose or a plain list."
+    },
+    {
+      "id": "oxford-triple",
+      "pattern": "\\b\\w+, \\w+, and \\w+\\b",
+      "category": "language",
+      "weight": 1,
+      "note": "Rule of three. Often legitimate; counted lightly and matters in clusters."
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+name: slop check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run scanner tests
+        run: npm test
+      - name: Smoke-test the CLI
+        run: |
+          echo "This serves as a testament to our seamless, groundbreaking approach." | node bin/sloplint.js analyze
+          node bin/sloplint.js scan docs --fail-above 60
+
+  # Template for consumers: copy this job into your repo to gate docs.
+  # docs-gate:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20
+  #     - run: npx --yes soundshuman scan docs --fail-above 50

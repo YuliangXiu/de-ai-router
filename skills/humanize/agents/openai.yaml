@@ -1,0 +1,4 @@
+interface:
+  display_name: "soundshuman"
+  short_description: "Remove AI writing patterns from prose and audit repos for slop"
+  default_prompt: "Use $humanize to make this text sound natural while preserving its meaning and facts."

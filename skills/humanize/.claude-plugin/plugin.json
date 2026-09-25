@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "soundshuman",
+  "description": "Keep AI slop out of your prose and your repo: a merged humanizer skill (41 patterns), voice calibration, repo auditing, and a zero-dependency slop scanner with CI gating.",
+  "version": "1.0.0",
+  "author": {
+    "name": "aasha"
+  },
+  "license": "MIT",
+  "keywords": ["writing", "editing", "ai-detection", "humanize", "slop", "prose", "lint", "style"]
+}

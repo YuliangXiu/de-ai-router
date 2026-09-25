@@ -1,0 +1,26 @@
+{
+  "name": "soundshuman",
+  "version": "1.0.0",
+  "description": "Keep AI slop out of your prose and your repo: a merged humanizer skill, a tiered rule pack, and a zero-dependency slop scanner with CI gating.",
+  "license": "MIT",
+  "bin": {
+    "sloplint": "bin/sloplint.js"
+  },
+  "main": "bin/sloplint.js",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "writing",
+    "editing",
+    "ai-detection",
+    "humanize",
+    "slop",
+    "prose",
+    "lint",
+    "style"
+  ]
+}

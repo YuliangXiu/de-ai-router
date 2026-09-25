@@ -1,6 +1,8 @@
 # de-ai-router 去AI味指令路由器
 
-一个 Agent Skill：当你说"去AI味""说人话""humanize""deslop"时，它不直接改稿，而是先判断**文本类型**与**意图**，从已安装的去 AI 味 skills 中路由到最合适的一个，再加载执行。
+一个 Agent Skill：当你说"去AI味""说人话""humanize""deslop"时，它不直接改稿，而是先判断**文本类型**与**意图**，从 10 个去 AI 味 skills 中路由到最合适的一个，再加载执行。
+
+**本仓库 self-contained**：`skills/` 目录已打包全部 10 个 skills，克隆即用，无需单独安装。
 
 ## 设计动机
 
@@ -18,6 +20,25 @@
  "太狠了 / 还不够" → 在路由表内切换
 ```
 
+## 安装
+
+**方式一：一键全装（推荐，self-contained）**
+
+```bash
+git clone https://github.com/YuliangXiu/de-ai-router.git /tmp/de-ai-router
+mkdir -p ~/.claude/skills
+# 路由器本体
+cp -R /tmp/de-ai-router ~/.claude/skills/de-ai-router
+# 10 个子 skill
+for d in /tmp/de-ai-router/skills/*/; do cp -R "$d" ~/.claude/skills/$(basename "$d"); done
+```
+
+**方式二：只要路由器**（自己已有部分子 skill）
+
+只复制根目录的 `SKILL.md`，并按需删改路由表。
+
+子 skill 兼容 `SKILL.md` 约定的 agent 环境（Claude Code / Codex / WorkBuddy 等）。
+
 ## 当前路由表（10 个 skill）
 
 | 文本类型 / 意图 | 首选 | 备选 |
@@ -30,11 +51,12 @@
 | 营销/宣传 | humanizer-aboudjem（warm/blunt） | unslop |
 | 检测但不改写 | no-ai-slop detect 模式 | — |
 | 检测+量化评分 | humanizer-aboudjem（0-100） | — |
+| 从零写作防 AI 味 | anti-ai-slop-writing（前置硬规则） | slopbeth（奥威尔六规则） |
 | 拿不准/混合 | humanize（41 模式最全） | humanizer-aboudjem |
 
-完整决策表（含意图覆盖、切换策略）见 [SKILL.md](SKILL.md)。
+完整决策表（含意图覆盖、切换策略、使用注意）见 [SKILL.md](SKILL.md)。
 
-## 已覆盖的 skills
+## 打包的 skills（`skills/` 目录）
 
 | Skill | 作者 | 定位 |
 |-------|------|------|
@@ -42,31 +64,22 @@
 | humanizer-zh | op7418（歸藏） | 中文专用 31 模式，含 F 组中文特有检查 |
 | no-ai-slop | Peter Yang | 锐利人类编辑，最小有效修改 + detect 模式 |
 | unslop | Cursor 官方 | 扫描→重写→注入灵魂→自审 |
-| slopbeth | ehmo | 密度优先，奥威尔六规则，证据边界 |
-| humanizer-aboudjem | Adam Boudjem | 55 模式 + 5 种 voice profile + 0-100 评分 |
+| slopbeth | ehmo | 密度优先，奥威尔六规则，证据边界，自带基准数据 |
+| humanizer-aboudjem | Adam Boudjem | 55 模式 + 5 种 voice profile + 0-100 评分，含中文模式目录 |
 | deslop | Stephen Turner | 唯一覆盖科研写作场景 |
 | anti-ai-slop-writing | jalaal | 从零写作时的前置硬规则（禁词表+结构规则） |
-| anti-slop | Matt Silverlock | 最大保留作者声音，假阳性比残留 tell 更糟 |
-| humanize | aasha | 41 模式目录最全，事实边界+统计可测 |
+| anti-slop | Matt Silverlock (elithrar) | 最大保留作者声音，假阳性比残留 tell 更糟 |
+| humanize | aasha | 41 模式目录最全，事实边界+统计可测，含 sloplint |
 
-## 安装
-
-把本目录放进你的 agent skills 目录即可（Claude Code / WorkBuddy 等兼容 `SKILL.md` 约定的环境）：
-
-```bash
-git clone https://github.com/YuliangXiu/de-ai-router.git ~/.claude/skills/de-ai-router
-```
-
-路由器本身不包含上面 10 个 skill——它们需要单独安装。你可以按需装子集，路由表只推荐已安装的（把表里没有的条目删掉即可）。
+来源与许可详见 [NOTICE.md](NOTICE.md)。8 个 MIT；2 个上游无 LICENSE（anti-ai-slop-writing、unslop），按惯例署名分发，权利人有异议即下架。
 
 ## 定制
 
-路由决策表就是两个 Markdown 表格，直接改 `SKILL.md`：
-
-- 换掉不匹配你场景的首选/备选
-- 删掉没安装的 skill 行
-- 加入你自己的 skill
+- 路由决策表就是 `SKILL.md` 里的两个 Markdown 表格，直接改
+- 装不齐 10 个也没关系——把路由表里没有的条目删掉即可
+- 加自己的 skill：在表格加一行，保持"首选/备选"格式
 
 ## 许可
 
-MIT
+聚合层（路由逻辑）：MIT，见 [LICENSE](LICENSE)。
+打包的各子 skill 许可归原作者，见 [NOTICE.md](NOTICE.md)。

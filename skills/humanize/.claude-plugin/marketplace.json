@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace-manifest.json",
+  "name": "soundshuman",
+  "owner": {
+    "name": "aasha"
+  },
+  "description": "The soundshuman skill and slop scanner, installable as a Claude Code plugin.",
+  "plugins": [
+    {
+      "name": "soundshuman",
+      "source": "./",
+      "description": "Keep AI slop out of your prose and your repo: merged humanizer skill, repo auditing, and a slop scanner with CI gating.",
+      "license": "MIT",
+      "keywords": ["writing", "editing", "ai-detection", "humanize", "slop", "prose", "lint", "style"]
+    }
+  ]
+}
