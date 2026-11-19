@@ -1,6 +1,6 @@
 ---
 name: de-ai-router
-description: 去AI味指令路由器。当用户说"去AI味""说人话""humanize""make it sound human""deslop""去机械感"或任何想让文字不像 AI 写的指令时，先判断文本类型与用户意图，再从已安装的去AI味 skills 中推荐最优方案（或给出多方案选择），然后按推荐加载对应 skill 执行。覆盖 10 个 skill：qu-ai-wei（中文首选，实测语料+双模式）、humanizer-zh、no-ai-slop、unslop、slopbeth、humanizer-aboudjem、deslop、anti-ai-slop-writing、anti-slop、humanize。
+description: 去AI味指令路由器。当用户说"去AI味""说人话""humanize""make it sound human""deslop""去机械感"或任何想让文字不像 AI 写的指令时，先判断文本类型与用户意图，再从已安装的去AI味 skills 中推荐最优方案（或给出多方案选择），然后按推荐加载对应 skill 执行。覆盖 11 个 skill：lieflat-less-ai-tone（中文检测首选，脚本量化+两轮 520 万字实测）、qu-ai-wei（中文改写首选）、humanizer-zh、no-ai-slop、unslop、slopbeth、humanizer-aboudjem、deslop、anti-ai-slop-writing、anti-slop、humanize。
 ---
 
 # 去AI味路由（De-AI Router）
@@ -20,7 +20,8 @@ description: 去AI味指令路由器。当用户说"去AI味""说人话""humaniz
 | **anti-slop**（已装） | Matt Silverlock | 审查导向 | 保留作者声音为第一指令，假阳性比残留 tell 更糟 | 最小修改、保留声音 |
 | **humanize**（已装） | aasha | 单模式重写 | 41 模式目录最全（融合维基+stop-slop+统计） | 事实边界 + 统计可测 |
 | **humanizer-zh**（已装） | op7418（歸藏） | 编辑已有中文文本 | 中文专用：31 模式含 F 组中文特有检查（层叠"的"、"进行+动词"、被字句、四字排比、"随着…发展"开头） | 信息完整度优先 + 作者声音 |
-| **qu-ai-wei**（已装） | baibanbao | 双模式（自家稿红笔报告 / 白名单直改） | 中文首选：三家合并（王佩写作系统+humanizer-zh+lieflat 实测 117.9 万汉字语料），11 刀有频率数据，含"不许动"反清单与七处裁决 | 实测数据 + 信息守恒 + 最小改动 |
+| **qu-ai-wei**（已装） | baibanbao | 双模式（自家稿红笔报告 / 白名单直改） | 中文改写首选：三家合并（王佩写作系统+humanizer-zh+lieflat V1 实测 117.9 万汉字语料），11 刀有频率数据，含"不许动"反清单与七处裁决 | 实测数据 + 信息守恒 + 最小改动 |
+| **lieflat-less-ai-tone**（已装） | shiujan | 检测先行（脚本报告→用户回复→改写→复测） | 中文检测首选：唯一带脚本量化与两轮实测（629 篇对照 + 270 对同题配对、520 万汉字），A/B/C/X/F 分级 + 否定清单（X 级永不改） | 指标驱动 + 信息守恒 + 最小改动 |
 
 ## 路由步骤
 
@@ -50,7 +51,8 @@ description: 去AI味指令路由器。当用户说"去AI味""说人话""humaniz
 
 | 文本类型 | 首选 | 备选 |
 |---------|------|------|
-| **中文文本（任意类型）** | **qu-ai-wei**（实测语料+双模式） | humanizer-zh（更轻量）；英文方案其 F 组中文检查仍可参考 |
+| **中文文本 · 要改写** | **qu-ai-wei**（实测语料+双模式） | humanizer-zh（更轻量）；英文方案其 F 组中文检查仍可参考 |
+| **中文文本 · 要检测/量化诊断** | **lieflat-less-ai-tone**（脚本 detect.py + 分级报告 + 复测对比） | no-ai-slop detect（只点名不量化）；humanizer-aboudjem（0-100 分） |
 | 学术/科研 | **deslop** | slopbeth（事实边界+密集写作） |
 | 通用散文 | **no-ai-slop** | anti-slop（更保守，最大保留原声） |
 | 短文本 | **anti-ai-slop-writing** | no-ai-slop |
@@ -62,14 +64,15 @@ description: 去AI味指令路由器。当用户说"去AI味""说人话""humaniz
 
 | 意图 | 方案 |
 |------|------|
-| 检测但不改写 | **no-ai-slop** detect 模式（只点名模式+引用原句，不评分不猜） |
+| 检测但不改写 | 中文成稿用 **lieflat-less-ai-tone**（脚本指标+研究参照+例句+改法，出专报）；其他语言用 no-ai-slop detect 模式（只点名模式+引用原句，不评分不猜） |
 | 检测 + 量化评分 | **humanizer-aboudjem** detect 模式（0-100 分） |
 | 最大程度保留原声 | **anti-slop**（外科手术式措辞修改）或 no-ai-slop |
 | 文本平淡无味要注入个性 | **unslop**（官方流程）或 humanizer-aboudjem（voice profile） |
 | 从零写作防 AI 味 | **anti-ai-slop-writing**（前置硬规则）或 slopbeth（奥威尔六规则） |
 | 密集、信息密度优先 | **slopbeth** |
 | 严谨事实边界（不编造） | **humanize** 或 slopbeth（证据边界模式） |
-| 中文文本去 AI 味 | **qu-ai-wei**（默认；自家稿出红笔报告，别人稿/只去味选白名单模式）。轻量场景用 humanizer-zh |
+| 中文文本去 AI 味（直接改） | **qu-ai-wei**（默认；自家稿出红笔报告，别人稿/只去味选白名单模式）。轻量场景用 humanizer-zh |
+| 中文文本要先知道"像不像 AI、凭什么这么说" | **lieflat-less-ai-tone**（先给改前报告：本篇指标、研究显著性、原句、改法；用户回"按建议改"才动稿）；改完可跑 report.py 出前后对比 |
 | 中文自己的文章要下狠刀+声音校准 | **qu-ai-wei** 自家稿模式（B 级红笔报告，不直接动稿） |
 
 ## 输出格式
@@ -85,10 +88,12 @@ description: 去AI味指令路由器。当用户说"去AI味""说人话""humaniz
 
 1. 按路由结果用 Skill 工具加载对应 skill。
 2. 把用户文本传给该 skill 执行。
-3. 若用户对结果不满意（"太过了"/"还不够"），在路由表内切换：改得太狠 → 换 anti-slop / no-ai-slop；还不够人味 → 换 unslop / humanizer-aboudjem。
+3. 若用户对结果不满意（"太过了"/"还不够"），在路由表内切换：改得太狠 → 换 anti-slop / no-ai-slop；还不够人味 → 换 unslop / humanizer-aboudjem；中文删过头 → 换 qu-ai-wei 白名单模式（逐字保留未命中部分）。
 
 ## 注意事项
 
 - 路由只在用户发"去AI味/说人话/humanize"类指令时触发，不影响普通写作任务。
 - 用户明确指名某个 skill（如"用 deslop"）时，跳过路由直接执行。
-- 中文文本优先考虑对中文支持好的方案；**中文一律首选 qu-ai-wei**（模式一说"问一句"时再选模式）；轻量场景或 qu-ai-wei 不可用时退 humanizer-zh。anti-ai-slop-writing 的禁词表含中英双语，适合中文短文本的前置写作约束。humanizer-aboudjem 自带 patterns.zh.md 中文模式目录。
+- 中文文本优先考虑对中文支持好的方案。**要改写首选 qu-ai-wei，要检测/量化首选 lieflat-less-ai-tone**（模式一说"问一句"时再选模式）；轻量场景或 qu-ai-wei 不可用时退 humanizer-zh。anti-ai-slop-writing 的禁词表含中英双语，适合中文短文本的前置写作约束。humanizer-aboudjem 自带 patterns.zh.md 中文模式目录。
+- lieflat 的流程是强制的"先报告后改写"：它默认不在第一轮动稿。用户只想直接拿到改后全文时，走 qu-ai-wei 白名单模式，或明确让 lieflat 跳过报告环节。
+- lieflat 的 X 级清单（配对复测已否决的伪信号，如"概括替代具体"、黑名单词"赋能/闭环/抓手"、"首先/其次"连接词）是跨 skill 的通用禁令：无论走哪个 skill，都不要拿这些当改写理由。

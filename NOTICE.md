@@ -1,10 +1,11 @@
 # NOTICE — 收录 skills 的来源与许可
 
-本仓库 `skills/` 目录打包了 10 个第三方去 AI 味 skills，方便一键安装。所有内容版权归原作者；本仓库仅做聚合分发，聚合本身（`de-ai-router/SKILL.md` 路由逻辑）为 MIT。
+本仓库 `skills/` 目录打包了 11 个第三方去 AI 味 skills，方便一键安装。所有内容版权归原作者；本仓库仅做聚合分发，聚合本身（`de-ai-router/SKILL.md` 路由逻辑）为 MIT。
 
 | Skill | 上游来源 | 许可 | 收录说明 |
 |-------|---------|------|---------|
-| **qu-ai-wei** | https://github.com/baibanbao/qu-ai-wei | MIT（见其 LICENSE） | 完整收录。本身是王佩写作系统 v4.0（未公开，作者已获授权内化）+ humanizer-zh + lieflat-less-ai-tone（MIT）的合并作品 |
+| **lieflat-less-ai-tone** | https://github.com/larashero3-dotcom/lieflat-less-ai-tone | **CC BY-NC 4.0**（署名—非商业性使用，© 2026 shiujan，见其 LICENSE） | 完整收录 V2（含 scripts、references、双案例与中英 README/RESEARCH）。**非商业使用**；商业写作、客户交付或产品集成需在 lieflat.work 购买授权 |
+| **qu-ai-wei** | https://github.com/baibanbao/qu-ai-wei | MIT（见其 LICENSE） | 完整收录。本身是王佩写作系统 v4.0（未公开，作者已获授权内化）+ humanizer-zh + lieflat-less-ai-tone V1（当时为 MIT，117.9 万汉字语料）的合并作品 |
 | **humanizer-zh** | https://github.com/op7418/Humanizer-zh | MIT（见其 LICENSE） | 完整收录，含测试 |
 | **slopbeth** | ehmo/slopkit（slopbeth skill） | MIT（见其 LICENSE） | 完整收录，含 benchmarks 与 scripts |
 | **humanizer-aboudjem** | https://github.com/Aboudjem/humanizer-skill | MIT（上游仓库声明） | 完整收录，含中英 patterns 与 evals |
@@ -18,5 +19,6 @@
 ## 免责
 
 - 各 skill 的内容与观点归原作者所有，本仓库不对其效果作任何担保。
+- **lieflat-less-ai-tone 为 CC BY-NC 4.0**：本仓库的收录属于非商业性再分发。若你把它用于商业写作、客户交付或产品集成，需自行向原作者购买授权，本聚合不授予任何商业使用权。
 - 上游无 LICENSE 的两个条目（anti-ai-slop-writing、unslop）按行业惯例以完整署名方式分发；权利人提出异议即下架。
 - 本聚合不改变任何 skill 的原始内容（除剔除 `.git`、`.gitignore`、`node_modules`）。
